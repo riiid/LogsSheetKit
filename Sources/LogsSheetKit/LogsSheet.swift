@@ -10,21 +10,14 @@ import SwiftUI
 
 public struct LogsSheet: View {
   @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
-
-  private let logs: [ActionLog]
-  private let clearAction: () -> Void
+  private let logsManager: LogsSheetManager = LogsSheetManager.shared
 
   @State private var isAscending: Bool = false
   @State private var showCopiedIndicator: Bool = false
   @State private var searchText: String = ""
 
-  public init(logs: [ActionLog], clearAction: @escaping () -> Void) {
-    self.logs = logs
-    self.clearAction = clearAction
-  }
-
   private var filteredLogs: [ActionLog] {
-    let sortedLogs: [ActionLog] = logs
+    let sortedLogs: [ActionLog] = logsManager.getLogs()
       .sorted(by: {
         isAscending
         ? $0.timeStamp < $1.timeStamp
@@ -77,7 +70,7 @@ public struct LogsSheet: View {
         ToolbarItemGroup(placement: .bottomBar) {
           Button(
             action: {
-              UIPasteboard.general.string = logs
+              UIPasteboard.general.string = logsManager.getLogs()
                 .map { dateFormatter.string(from: $0.timeStamp) + "\n" + $0.message }
                 .joined(separator: "\n")
               showCopiedIndicator = true
@@ -88,7 +81,9 @@ public struct LogsSheet: View {
           )
           Spacer()
           Button(
-            action: clearAction,
+            action: {
+              logsManager.clearLogs()
+            } ,
             label: {
               Text("Clear")
             }
@@ -127,19 +122,14 @@ private let dateFormatter: ISO8601DateFormatter = {
 
 // MARK: Previewer
 
+#warning("Add stubs")
 struct LogsSheet_Previews: PreviewProvider {
-  static private let logsStub: [ActionLog] = [
-    ActionLog(message: "stub action log"),
-    ActionLog(message: "stub action log"),
-    ActionLog(message: "stub action log")
-  ]
-
   static var previews: some View {
     Group {
-      LogsSheet(logs: [], clearAction: {})
+      LogsSheet()
         .previewDisplayName("LogsSheet | empty")
 
-      LogsSheet(logs: logsStub, clearAction: {})
+      LogsSheet()
         .previewDisplayName("LogsSheet | non empty")
     }
   }
