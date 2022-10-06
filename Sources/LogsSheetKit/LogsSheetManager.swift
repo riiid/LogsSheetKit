@@ -8,7 +8,7 @@
 import Foundation
 
 public struct LogsSheetManager {
-  static var shared: LogsSheetManager = LogsSheetManager()
+  public static var shared: LogsSheetManager = LogsSheetManager()
 
   private var logs: [ActionLog] = []
 
