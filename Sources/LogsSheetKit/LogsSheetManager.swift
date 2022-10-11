@@ -15,6 +15,6 @@ final public class LogsSheetManager: ObservableObject {
 
   public func log(message: String) {
     let log: ActionLog = ActionLog(message: message)
-    LogsSheetManager.shared.logs.append(log)
+    self.logs.append(log)
   }
 }
