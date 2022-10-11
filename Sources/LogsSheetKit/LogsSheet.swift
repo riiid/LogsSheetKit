@@ -135,9 +135,6 @@ struct LogsSheet_Previews: PreviewProvider {
     Group {
       LogsSheet()
         .previewDisplayName("LogsSheet | empty")
-
-      LogsSheet()
-        .previewDisplayName("LogsSheet | non empty")
     }
   }
 }
