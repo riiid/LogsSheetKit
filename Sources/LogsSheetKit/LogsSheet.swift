@@ -16,6 +16,8 @@ public struct LogsSheet: View {
   @State private var showCopiedIndicator: Bool = false
   @State private var searchText: String = ""
 
+  public init() { }
+
   private var filteredLogs: [ActionLog] {
     let sortedLogs: [ActionLog] = logsManager.getLogs()
       .sorted(by: {
