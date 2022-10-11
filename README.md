@@ -16,7 +16,7 @@ Lightweight customizable logger for iOS using Swift 5.7, with minimum iOS 14 ver
 
 ## Usage
 
-Usage of LogsSheetKit is pretty stright-forward, since LogsSheetKit handles most of the work by itself.
+Usage of LogsSheetKit is pretty straight-forward, since LogsSheetKit handles most of the work by itself.
 
 In order to log any message, just call LogsSheetManager.shared.log(message: "your message to be logged")
 
