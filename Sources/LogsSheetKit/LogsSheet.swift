@@ -130,7 +130,6 @@ private let dateFormatter: ISO8601DateFormatter = {
 
 // MARK: Previewer
 
-#warning("Add stubs")
 struct LogsSheet_Previews: PreviewProvider {
   static var previews: some View {
     Group {
