@@ -10,7 +10,7 @@
 
 ## Introduction
 
-Lightweight customizable logger for iOS using Swift 5 5.7, with minimum iOS 14 version.
+Lightweight customizable logger for iOS using Swift 5.7, with minimum iOS 14 version.
 
 ## Usage
 
