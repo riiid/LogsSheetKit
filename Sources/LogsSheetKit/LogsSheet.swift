@@ -82,7 +82,10 @@ public struct LogsSheet: View {
               Text("Copy All")
             }
           )
+          .disabled(logsManager.logs.isEmpty)
+
           Spacer()
+
           Button(
             action: {
               logsManager.logs.removeAll()
@@ -91,7 +94,9 @@ public struct LogsSheet: View {
               Text("Clear")
             }
           )
+          .disabled(logsManager.logs.isEmpty)
         }
+
         ToolbarItem(placement: .automatic) {
           Button(
             action: { isAscending.toggle() },
