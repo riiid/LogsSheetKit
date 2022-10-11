@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-public class LogsSheetManager: ObservableObject {
+final public class LogsSheetManager: ObservableObject {
   public static var shared: LogsSheetManager = LogsSheetManager()
 
   @Published var logs: [ActionLog] = []
