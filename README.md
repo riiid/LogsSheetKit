@@ -53,7 +53,7 @@ Please provide as much information about your proposed changes as possible.
 ## Maintainers
 
 - [tisohjung](https://github.com/tisohjung)
-- [korJAEYOUNGYUN]9https://github.com/korJAEYOUNGYUN)
+- [korJAEYOUNGYUN](https://github.com/korJAEYOUNGYUN)
 - [SongJiyeon](https://github.com/SongJiyeon) 
 - [yermukhanbet](https://github.com/yermukhanbet)
 
