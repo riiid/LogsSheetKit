@@ -5,26 +5,22 @@
 //  Copyright © 2022 Riiid Inc. All rights reserved.
 //
 
+import Combine
 import SPIndicator
 import SwiftUI
 
 public struct LogsSheet: View {
   @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
 
-  private let logs: [ActionLog]
-  private let clearAction: () -> Void
-
   @State private var isAscending: Bool = false
   @State private var showCopiedIndicator: Bool = false
   @State private var searchText: String = ""
+  @ObservedObject var logsManager: LogsSheetManager = LogsSheetManager.shared
 
-  public init(logs: [ActionLog], clearAction: @escaping () -> Void) {
-    self.logs = logs
-    self.clearAction = clearAction
-  }
+  public init() { }
 
   private var filteredLogs: [ActionLog] {
-    let sortedLogs: [ActionLog] = logs
+    let sortedLogs: [ActionLog] = logsManager.logs
       .sorted(by: {
         isAscending
         ? $0.timeStamp < $1.timeStamp
@@ -77,7 +73,7 @@ public struct LogsSheet: View {
         ToolbarItemGroup(placement: .bottomBar) {
           Button(
             action: {
-              UIPasteboard.general.string = logs
+              UIPasteboard.general.string = logsManager.logs
                 .map { dateFormatter.string(from: $0.timeStamp) + "\n" + $0.message }
                 .joined(separator: "\n")
               showCopiedIndicator = true
@@ -86,14 +82,21 @@ public struct LogsSheet: View {
               Text("Copy All")
             }
           )
+          .disabled(logsManager.logs.isEmpty)
+
           Spacer()
+
           Button(
-            action: clearAction,
+            action: {
+              logsManager.logs.removeAll()
+            } ,
             label: {
               Text("Clear")
             }
           )
+          .disabled(logsManager.logs.isEmpty)
         }
+
         ToolbarItem(placement: .automatic) {
           Button(
             action: { isAscending.toggle() },
@@ -128,19 +131,10 @@ private let dateFormatter: ISO8601DateFormatter = {
 // MARK: Previewer
 
 struct LogsSheet_Previews: PreviewProvider {
-  static private let logsStub: [ActionLog] = [
-    ActionLog(message: "stub action log"),
-    ActionLog(message: "stub action log"),
-    ActionLog(message: "stub action log")
-  ]
-
   static var previews: some View {
     Group {
-      LogsSheet(logs: [], clearAction: {})
+      LogsSheet()
         .previewDisplayName("LogsSheet | empty")
-
-      LogsSheet(logs: logsStub, clearAction: {})
-        .previewDisplayName("LogsSheet | non empty")
     }
   }
 }
