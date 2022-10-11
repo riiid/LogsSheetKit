@@ -5,21 +5,22 @@
 //  Copyright © 2022 Riiid Inc. All rights reserved.
 //
 
+import Combine
 import SPIndicator
 import SwiftUI
 
 public struct LogsSheet: View {
   @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
-  private let logsManager: LogsSheetManager = LogsSheetManager.shared
 
   @State private var isAscending: Bool = false
   @State private var showCopiedIndicator: Bool = false
   @State private var searchText: String = ""
+  @ObservedObject var logsManager: LogsSheetManager = LogsSheetManager.shared
 
   public init() { }
 
   private var filteredLogs: [ActionLog] {
-    let sortedLogs: [ActionLog] = logsManager.getLogs()
+    let sortedLogs: [ActionLog] = logsManager.logs
       .sorted(by: {
         isAscending
         ? $0.timeStamp < $1.timeStamp
@@ -72,7 +73,7 @@ public struct LogsSheet: View {
         ToolbarItemGroup(placement: .bottomBar) {
           Button(
             action: {
-              UIPasteboard.general.string = logsManager.getLogs()
+              UIPasteboard.general.string = logsManager.logs
                 .map { dateFormatter.string(from: $0.timeStamp) + "\n" + $0.message }
                 .joined(separator: "\n")
               showCopiedIndicator = true
@@ -84,7 +85,7 @@ public struct LogsSheet: View {
           Spacer()
           Button(
             action: {
-              logsManager.clearLogs()
+              logsManager.logs.removeAll()
             } ,
             label: {
               Text("Clear")

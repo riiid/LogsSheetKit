@@ -6,22 +6,15 @@
 //
 
 import Foundation
+import Combine
 
-public struct LogsSheetManager {
+public class LogsSheetManager: ObservableObject {
   public static var shared: LogsSheetManager = LogsSheetManager()
 
-  private var logs: [ActionLog] = []
+  @Published var logs: [ActionLog] = []
 
   public func log(message: String) {
     let log: ActionLog = ActionLog(message: message)
     LogsSheetManager.shared.logs.append(log)
-  }
-
-  public func getLogs() -> [ActionLog] {
-    LogsSheetManager.shared.logs
-  }
-
-  public func clearLogs() {
-    LogsSheetManager.shared.logs.removeAll()
   }
 }
